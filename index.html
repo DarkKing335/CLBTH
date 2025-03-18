@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="image/icon.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>CTDL & GT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body>
+    <h1>Danh sách liên kết đơn</h1>
+
+    <h2>1. Tạo danh sách liên kết</h2>
+    <div class="box box1">
+      <pre><code class="code">
+#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    
+    Node(int value) {
+        data = value;
+        next = NULL;
+    }
+};
+
+int main() {
+    Node *head = NULL, *tail = NULL;
+    int n;
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        Node* temp = new Node(x);
+
+        if (head == NULL) {
+            head = temp;
+            tail = temp;
+        } else {
+            tail->next = temp;
+            tail = temp;
+        }
+    }
+
+    cout << "Danh sach lien ket: ";
+    Node* current = head;
+    while (current != NULL) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+}
+      </code></pre>
+    </div>
+
+    <h2>2. Thêm 1 node vào đầu danh sách liên kết đơn</h2>
+    <div class="box box2">
+      <pre><code class="code">
+#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = NULL;
+    }
+};
+
+// Hàm chèn một node vào đầu danh sách
+void insertAtHead(Node*& head, int value) {
+    Node* newNode = new Node(value);
+    newNode->next = head;
+    head = newNode;
+}
+
+// Hàm in danh sách liên kết
+void printList(Node* head) {
+    while (head != NULL) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    int n, value;
+
+    cout << "Nhap so luong node: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Nhap gia tri node: ";
+        cin >> value;
+        insertAtHead(head, value);
+    }
+
+    cout << "Danh sach lien ket sau khi them: ";
+    printList(head);
+}
+      </code></pre>
+    </div>
+
+    <h2>3. Thêm 1 node vào cuối danh sách liên kết đơn</h2>
+    <div class="box box3">
+      <pre><code class="code">
+#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = NULL;
+    }
+};
+
+// Hàm chèn một node vào cuối danh sách
+void insertAtTail(Node*& head, int value) {
+    Node* newNode = new Node(value);
+
+    if (head == NULL) { // Nếu danh sách rỗng, gán head = newNode
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != NULL) { // Duyệt đến node cuối cùng
+        temp = temp->next;
+    }
+
+    temp->next = newNode; // Gán node mới vào cuối danh sách
+}
+
+// Hàm in danh sách liên kết
+void printList(Node* head) {
+    while (head != NULL) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    int n, value;
+
+    cout << "Nhap so luong node: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Nhap gia tri node: ";
+        cin >> value;
+        insertAtTail(head, value);
+    }
+
+    cout << "Danh sach lien ket sau khi them: ";
+    printList(head);
+}
+      </code></pre>
+    </div>
+
+    <h2>4. Thêm 1 node vào vị trí bất kì danh sách liên kết đơn</h2>
+    <div class="box box4">
+      <pre><code class="code">
+#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = NULL;
+    }
+};
+
+// Hàm chèn một node vào vị trí bất kỳ trong danh sách
+void insertAtPosition(Node*& head, int value, int pos) {
+    Node* newNode = new Node(value);
+
+    if (pos == 0 || head == NULL) { // Chèn vào đầu danh sách
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    for (int i = 0; i < pos - 1 && temp->next != NULL; i++) {
+        temp = temp->next;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+// Hàm in danh sách liên kết
+void printList(Node* head) {
+    while (head != NULL) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    int n, value, pos;
+
+    cout << "Nhap so luong node ban dau: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Nhap gia tri node: ";
+        cin >> value;
+        insertAtPosition(head, value, i); // Chèn vào cuối danh sách ban đầu
+    }
+
+    cout << "Danh sach hien tai: ";
+    printList(head);
+
+    cout << "Nhap gia tri va vi tri can chen: ";
+    cin >> value >> pos;
+    insertAtPosition(head, value, pos);
+
+    cout << "Danh sach sau khi chen: ";
+    printList(head);
+}
+      </code></pre>
+    </div>
+  </body>
+</html>
